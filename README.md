@@ -1,4 +1,4 @@
-docker-dev-practice-course
+docker-code-practice-course
 =========================
 
-Docker files for "dev good practice" course's practical work
+Docker file for "dev practice" course's practical work
