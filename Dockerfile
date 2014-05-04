@@ -13,6 +13,7 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 CMD ["/sbin/my_init"]
 
 RUN echo deb http://archive.ubuntu.com/ubuntu precise main universe > /etc/apt/sources.list
+RUN apt-get update
 
 # Jenkins
 RUN apt-get install -y curl
@@ -25,12 +26,12 @@ RUN apt-get install -y jenkins
 RUN mkdir /etc/service/jenkins
 ADD jenkins.sh /etc/service/jenkins/run
 
-#Install Oracle Java 7
-RUN apt-get install -y python-software-properties && \
-    add-apt-repository ppa:webupd8team/java -y && \
-    apt-get update && \
-    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java7-installer
+# Oracle Java 7
+RUN apt-get install -y python-software-properties
+RUN add-apt-repository ppa:webupd8team/java -y
+RUN apt-get update
+RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+RUN apt-get install -y oracle-java7-installer
 
 # Sonar
 RUN curl --remote-name http://dist.sonar.codehaus.org/sonarqube-4.1.zip
@@ -41,9 +42,14 @@ RUN mv sonarqube-4.1 /opt
 RUN mkdir /etc/service/sonar
 ADD sonar.sh /etc/service/sonar/run
 
-# Git
-RUN apt-get install -y git
+# Maven 
+RUN apt-get install -y maven
 
+# Git 
+#RUN apt-get install -y git=1:1.7.9.5-1 -v
+#RUN apt-get install -y git
+# Clone and init repo for course
+#RUN git clone https://github.com/acombe/source-dev-practice-course
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
