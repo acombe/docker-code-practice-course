@@ -40,10 +40,8 @@ RUN curl --remote-name http://mir2.ovh.net/ftp.apache.org/dist/maven/maven-3/3.2
 RUN unzip apache-maven-3.2.1-bin.zip
 RUN mv apache-maven-3.2.1 /opt/
 RUN ln -s /opt/apache-maven-3.2.1/bin/mvn /usr/bin/mvn
-
 RUN sed -i '1iM3_HOME="/opt/apache-maven-3.2.1"' /etc/environment
 RUN sed -i '1iM3="$M3_HOME/bin"' /etc/environment
-RUN sed -i '1iJAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64/"' /etc/environment
 
 # Oracle JDK 7
 RUN apt-get install -y software-properties-common python-software-properties
@@ -51,8 +49,7 @@ RUN add-apt-repository ppa:webupd8team/java -y
 RUN apt-get update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN apt-get install -y oracle-java7-installer
-# Change JAVA_HOME env variable
-RUN sed -i -e 's/^JAVA_HOME.*$/JAVA_HOME="\/usr\/lib\/jvm\/java-7-oracle"/g' /etc/environment
+RUN sed -i '1iJAVA_HOME="/usr/lib/jvm/java-7-oracle/"' /etc/environment
 
 # SSH
 ADD ssh/authorized_keys /root/.ssh/authorized_keys
