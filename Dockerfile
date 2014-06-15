@@ -34,7 +34,9 @@ RUN rm -f sonarqube-4.1.zip
 # Git
 RUN apt-get install -y git
 # Clone and init repo for course
-RUN git clone https://github.com/acombe/source-dev-practice-course
+RUN git clone https://github.com/acombe/source-code-practice-course
+# Work branch creation because student can't push on master (wich is not a bare repo, we just clone it from github...)
+RUN cd /source-code-practice-course/ && git checkout -b work
 
 # Maven
 # RUN apt-get install -y maven => error "fuse install device"
@@ -59,7 +61,14 @@ RUN sed -i '1iJAVA_HOME="/usr/lib/jvm/java-7-oracle/"' /etc/environment
 ADD ssh/authorized_keys /root/.ssh/authorized_keys
 RUN sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
 
+# Apache
+RUN apt-get -y install apache2 libapache2-mod-php5 php5
+RUN rm -rf /var/www/*
+RUN mkdir -p /var/www/html/images
+ADD html/index.php /var/www/html/
+ADD html/images/ /var/www/html/images/
+
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-EXPOSE 22 8080 9000
+EXPOSE 80 22 8080 9000
 CMD ["/usr/bin/supervisord"]
