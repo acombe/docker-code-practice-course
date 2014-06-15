@@ -21,6 +21,7 @@ RUN mkdir /var/run/jenkins
 RUN apt-get install -y jenkins
 # Allow local jenkins to connect to localhost git repo
 ADD ssh/id_rsa /root/.ssh/
+RUN chmod 0600 /root/.ssh/id_rsa
 ADD ssh/id_rsa.pub /root/.ssh/
 ADD ssh/known_hosts /root/.ssh/
 
@@ -28,6 +29,7 @@ ADD ssh/known_hosts /root/.ssh/
 RUN curl --remote-name http://dist.sonar.codehaus.org/sonarqube-4.1.zip
 RUN unzip sonarqube-4.1.zip
 RUN mv sonarqube-4.1 /opt
+RUN rm -f sonarqube-4.1.zip
 
 # Git
 RUN apt-get install -y git
@@ -39,6 +41,8 @@ RUN git clone https://github.com/acombe/source-dev-practice-course
 RUN curl --remote-name http://mir2.ovh.net/ftp.apache.org/dist/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.zip
 RUN unzip apache-maven-3.2.1-bin.zip
 RUN mv apache-maven-3.2.1 /opt/
+RUN rm -f apache-maven-3.2.1-bin.zip
+
 RUN ln -s /opt/apache-maven-3.2.1/bin/mvn /usr/bin/mvn
 RUN sed -i '1iM3_HOME="/opt/apache-maven-3.2.1"' /etc/environment
 RUN sed -i '1iM3="$M3_HOME/bin"' /etc/environment
