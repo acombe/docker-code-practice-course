@@ -149,9 +149,9 @@ Dézipper le package, et exécutez le fichier eclipse.exe qu'il contient.
 <ul>
 <li>Récupérer la clef privée de votre groupe et déposez là dans un répertoire sécurisé sur votre poste de développement (i.e. C:\Users\[nom user]\.ssh)</li>
 <li>Ajouter la clef privée dans Eclipse via le menu Preferences => Network Connections => SSH2 => Add private key 
-<p>
-<img alt="" src="images/SSH_key1.PNG"> 
-<p/>
+<p align="center">
+<img alt="" src="images/SSH_key1.PNG" /> 
+</p>
 </li>
 </ul>
 </p>
@@ -163,14 +163,14 @@ Récupérer le projet depuis le repository Git de votre groupe :
 <li>Ouvrir la perpective Git</li>
 <li>Cliquez sur "Clone a repository"</li>
 <li>Dans la fenetre, rentrer les paramètres URI avec la valeur : ssh://root@<?=$host?>:<?=$group_port?>22/source-code-practice-course
-<p>
-<img alt="" src="images/Git1.PNG"> 
-<p/>
+<p align="center">
+<img alt="" src="images/Git1.PNG" /> 
+</p>
 </li>
 <li>Dans la fenetre suivante, selectionner la branche "work"
-<p>
-<img alt="" src="images/Git2.PNG"> 
-<p/>
+<p align="center">
+<img alt="" src="images/Git2.PNG" /> 
+</p>
 </li>
 </ul>
 
@@ -194,8 +194,8 @@ Transformez votre projet en projet Maven grâce au plugin Maven d'Eclipse : utili
 Regardez la console Maven. <span class="questions">Que se passe-t-il ?</span>
 <div class="note">
 Si le projet ne compile toujours pas ou si vos settings Maven existants ne permettent pas de récupérer correctement les dépendances, paramétrez votre projet grace au plugin Eclipse de Maven (en spécifiant éventuellement des settings.xml spécifiques grâce aux paramètres --settings et --global-settings)
-<p>
-<img alt="" src="images/Mvn_Eclipse.PNG"> 
+<p align="center">
+<img alt="" src="images/Mvn_Eclipse.PNG" /> 
 </p>
 </div>
 
@@ -210,8 +210,8 @@ En activant le plugin Maven sur le projet, deux dossiers ont été ajoutés au buil
 </p>
 <p class="instructions">
 Ces classes contiennent des tests unitaires, exécutez-les dans Eclipse.
-<p>
-<img alt="" src="images/Test1.PNG"> 
+<p align="center">
+<img alt="" src="images/Test1.PNG" /> 
 </p>
 </p>
 <p class="instructions">
@@ -221,8 +221,8 @@ Lancez la commande <span class="command">Maven Install</span> dans le menu <span
 <h3>Exécuter le projet sur un serveur</h3>
 <p class="instructions">
 Exécutez votre projet sur le serveur Jetty embarqué dans le plugin Run-Jetty-Run.
-<p>
-<img alt="" src="images/Run_Jetty1.PNG">
+<p align="center">
+<img alt="" src="images/Run_Jetty1.PNG" />
 </p>
 
 <br />
@@ -240,8 +240,10 @@ Des données sont déjà présentes dans la base de données. <span class="questions"
 <h3>Analyser la qualité et le respect des conventions de codage</h3>
 <p class="instructions">
 Activez le plugin Checkstyle sur le projet.
-<img alt="" src="images/CheckStyle1.png">
-<br />
+<p align="center">
+<img alt="" src="images/CheckStyle1.png" />
+</p>
+
 Si les erreurs ne sont pas affichés, exécuter la commande <span class="command">Check code with Checkstyle</span> dans le menu <span class="command">Checkstyle</span>.
 </p>
 <p class="instructions">
@@ -283,7 +285,7 @@ Téléchargez <a href="http://jmeter.apache.org/download_jmeter.cgi">JMeter</a> et
 A partir du dossier bin ainsi dézippé, lancez la commande jmeter.bat ou jmeter.sh en fonction de votre système d'exploitation. (Attention, pour les systèmes à base Unix, il peut être nécessaire d'ajouter le droit d'exécution sur le fichier avant de le lancer : <span class="command">chmod +x *.sh</span>)
 </p>
 <p class="instructions">
-A partir du fichier <a href="<?=$apache_url?>/documents/ScenarioJMeter.docx">document</a>, enregistrez le scénario suivant sur l'application forum :
+A partir du fichier <a href="<?=$apache_url?>/documents/ScenarioJMeter.docx">ScenarioJMeter.docx</a>, enregistrez le scénario suivant sur l'application forum :
 <ul>
 <li>Ouvrez la page d'accueil,</li>
 <li>Connectez-vous avec un mot de passe ou un login erroné,</li>
@@ -332,35 +334,41 @@ Enregistrez le même scénario que pour JMeter, ajoutez des assertions dans votre 
 
 <h3>Déclarer le projet dans Jenkins</h3>
 <p class="instructions">
-Commitez l'ensemble de vos modifications (git commit -m "Commentaire de commit") puis pousser (git push) les vers votre repository distant.
+Commitez l'ensemble de vos modifications (git commit -m "Commentaire") puis pousser (git push) les vers votre repository distant.
 <br />
-Connectez-vous à votre environnement Jenkins <a href="<?=$jenkins_url?>" />
+Connectez-vous à votre environnement Jenkins <a href="<?=$jenkins_url?>">ici</a>
 <br />
-Activez dans jenkins le plugin git
-<br />
-Déclarez un nouveau job
+Activez dans jenkins le plugin git (Administrer Jenkins => Gestion des plugins => Disponibles)
+<p align="center">
+<img alt="" src="images/JenkinsGitPlugin.PNG" />
+</p>
+Paramétrer Maven pour vos jobs jenkins (Administrer Jenkins => Configurer le système) en spécifiant le chemin vers Maven (MAVEN_HOME : /opt/apache-maven-3.2.1)
+<p align="center">
+<img alt="" src="images/JenkinsMavenConfiguration.PNG" />
+</p>
+Déclarez un nouveau job pour votre projet (Nouvel Item => Construire un projet maven2/3)
+<p align="center">
+<img alt="" src="images/JenkinsJob1.PNG" />
+</p>
+Sur la page de configuration du job, configurer la partie "Gestion de code source" avec les caractéristiques de votre repository remote i.e.
+<ul>
+<li>Repositories : ssh://root@127.0.0.1/source-dev-practice-course</li>
+<li>Branches to build : origin/work</li>
+</ul>
 <br />
 Exécutez un build avec la configuration actuelle et inspectez les résultats. <span class="question">Décrire ce qui est exécuté ?</span>
 </p>
 
 <h3>Mesurer continuellement la qualité</h3>
 <p class="instructions">
-Activez les plugins suivants :
+Activez dans jenkins les plugins suivants :
 <ul>
 <li>Static Code Analysis,</li>
 <li>Checkstyle,</li>
 <li>FindBugs,</li>
 <li>PMD,</li>
-<li>Sonar (<a href="http://docs.codehaus.org/display/SONAR/Activate+Sonar+on+Jenkins+job">Voir la documentation sur le plugin</a>)</li>
 </ul>
 </p>
-<p class="instructions">
-Lancez un build, regardez les résultats dans Jenkins, que pouvez-vous observer ?
-<br />
-Accédez à <a href="/sonar" class="tools" target="_blank">Sonar</a> et recherchez votre projet. Parcourez les résultats.
-</p>
-
-<p class="instructions">
 A partir de la documentation accessible sur Internet, activez dans votre fichier POM les plugins suivants pour que le serveur de build puisse en afficher les résultats :
 <ul>
 <li>PMD (<a href="https://wiki.jenkins-ci.org/display/JENKINS/PMD+Plugin">Documentation</a>)</li>
@@ -368,16 +376,42 @@ A partir de la documentation accessible sur Internet, activez dans votre fichier
 </ul>
 </p>
 
+<p class="instructions">
+Sonar est un outil de mesure de la qualité rassemblant l'ensemble des outils précédant (Chesktyle, Findbugs etc.) et fournissant une vue globale du niveau de qualité du code.
+</br>
+Activez dans jenkins le plugin Sonar. (<a href="http://docs.codehaus.org/display/SONAR/Activate+Sonar+on+Jenkins+job">Voir la documentation sur le plugin</a>)
+<p align="center">
+<img alt="" src="images/JenkinsSonarPlugin.PNG" />
+</p>
+</br>
+Paramétrer Sonar pour vos jobs jenkins (Administrer Jenkins => Configurer le système). Le paramétrage peut être vide car le serveur Sonar est installé par défaut sur le port 9000 comme attendu par Jenkins (http://localhost:9000)
+<p align="center">
+<img alt="" src="images/JenkinsSonarConfiguration.PNG" />
+</p>
+Ajouter une étape après le build dans la configuration de votre job permettant à Jenkins de lancer une analyse Sonar de votre code
+<p align="center">
+<img alt="" src="images/JenkinsPostBuildSonar.png" />
+</p
+Lancez un build, regardez les résultats dans Jenkins.<span class="question">Que pouvez-vous observer ?</span>
+<br />
+Accédez à <a href="$sonar_url" class="tools">Sonar</a> et recherchez votre projet. Parcourez les résultats. <span class="question">Que pensez vous du niveau de qualité du projet ? Voyez vous des choses à améliorer ?</span>
+<br />
+Connectez vous en tant qu'administrateur (login : admin/ passwd : admin) à Sonar puis parcourez la liste des plugins disponibles (Update Center => Available plugins).  <span class="question">Quels seraient les plugins interessants à utiliser d'apres vous et pourquoi ?</span>
+
+</p>
+
+<h3>Tester continuellement les performances</h3>
+<p class="instructions">
+Activez le plugin Performance (JMeter) sur votre projet et lancez une build.
+<p align="center">
+<img alt="" src="images/JenkinsPerformancePlugin.PNG" />
+</p>
+</p>
 
 <h3>Tester la couverture de code</h3>
 <p class="instructions">
 A partir de la documentation sur <a href="https://wiki.jenkins-ci.org/display/JENKINS/Emma+Plugin">le plugin d'EMMA pour Jenkins</a>, ajoutez la mesure de la couverture de code à votre build.
 <p>
-
-<h3>Tester continuellement les performances</h3>
-<p class="instructions">
-Activez le plugin Performance (JMeter) sur votre projet et lancez une build.
-</p>
 <br />
 <br />
 </body>
