@@ -7,9 +7,11 @@ RUN echo deb http://archive.ubuntu.com/ubuntu trusty main universe > /etc/apt/so
 RUN apt-get update
 RUN apt-get upgrade -y
 
+# SSH and other tools
 RUN apt-get install -y openssh-server supervisor curl unzip
 RUN mkdir -p /var/run/sshd
-#RUN echo 'root:xela12' |chpasswd
+ADD ssh/authorized_keys /root/.ssh/authorized_keys
+RUN sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
 RUN mkdir -p /var/log/supervisor
 
 # Jenkins
@@ -44,7 +46,6 @@ RUN curl --remote-name http://mir2.ovh.net/ftp.apache.org/dist/maven/maven-3/3.2
 RUN unzip apache-maven-3.2.1-bin.zip
 RUN mv apache-maven-3.2.1 /opt/
 RUN rm -f apache-maven-3.2.1-bin.zip
-
 RUN ln -s /opt/apache-maven-3.2.1/bin/mvn /usr/bin/mvn
 RUN sed -i '1iM3_HOME="/opt/apache-maven-3.2.1"' /etc/environment
 RUN sed -i '1iM3="$M3_HOME/bin"' /etc/environment
@@ -57,16 +58,14 @@ RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true 
 RUN apt-get install -y oracle-java7-installer
 RUN sed -i '1iJAVA_HOME="/usr/lib/jvm/java-7-oracle/"' /etc/environment
 
-# SSH
-ADD ssh/authorized_keys /root/.ssh/authorized_keys
-RUN sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
-
 # Apache
 RUN apt-get -y install apache2 libapache2-mod-php5 php5
 RUN rm -rf /var/www/*
 RUN mkdir -p /var/www/html/images
+RUN mkdir -p /var/www/html/documents
 ADD html/index.php /var/www/html/
 ADD html/images/ /var/www/html/images/
+ADD html/documents/ /var/www/html/documents/
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
