@@ -388,7 +388,7 @@ Paramétrer Sonar pour vos jobs jenkins (Administrer Jenkins => Configurer le sys
 <p align="center">
 <img alt="" src="images/JenkinsSonarConfiguration.PNG" />
 </p>
-Ajouter une étape après le build dans la configuration de votre job permettant à Jenkins de lancer une analyse Sonar de votre code
+Ajouter une étape après le build dans la configuration de votre job permettant à Jenkins de lancer une analyse Sonar de votre code.
 <p align="center">
 <img alt="" src="images/JenkinsPostBuildSonar.png" />
 </p
@@ -402,10 +402,15 @@ Connectez vous en tant qu'administrateur (login : admin/ passwd : admin) à Sonar
 
 <h3>Tester continuellement les performances</h3>
 <p class="instructions">
-Activez le plugin Performance (JMeter) sur votre projet et lancez une build.
+Activez le plugin Performance (JMeter) sur votre projet.
 <p align="center">
 <img alt="" src="images/JenkinsPerformancePlugin.PNG" />
 </p>
+Ajouter une étape après le build dans la configuration de votre job permettant à la génération des rapports de performances dans Jenkins.
+<p align="center">
+<img alt="" src="images/JenkinsPerfReportJobConfiguration.png" />
+</p>
+Lancez une build. <span class="question">Que constatez vous sur la page de résultat du build ?</span>
 </p>
 
 <h3>Tester la couverture de code</h3>
