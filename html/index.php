@@ -352,7 +352,7 @@ Déclarez un nouveau job pour votre projet (Nouvel Item => Construire un projet m
 </p>
 Sur la page de configuration du job, configurer la partie "Gestion de code source" avec les caractéristiques de votre repository remote i.e.
 <ul>
-<li>Repositories : ssh://root@127.0.0.1/source-dev-practice-course</li>
+<li>Repositories : ssh://root@127.0.0.1/source-code-practice-course</li>
 <li>Branches to build : origin/work</li>
 </ul>
 <br />
