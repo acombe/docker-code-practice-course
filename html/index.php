@@ -285,7 +285,7 @@ Téléchargez <a href="http://jmeter.apache.org/download_jmeter.cgi">JMeter</a> et
 A partir du dossier bin ainsi dézippé, lancez la commande jmeter.bat ou jmeter.sh en fonction de votre système d'exploitation. (Attention, pour les systèmes à base Unix, il peut être nécessaire d'ajouter le droit d'exécution sur le fichier avant de le lancer : <span class="command">chmod +x *.sh</span>)
 </p>
 <p class="instructions">
-A partir du fichier <a href="<?=$apache_url?>/documents/ScenarioJMeter.docx">ScenarioJMeter.docx</a>, enregistrez le scénario suivant sur l'application forum :
+A partir du fichier <a href="<?=$apache_url?>/documents/ScenarioJMeter.pdf">ScenarioJMeter.pdf</a>, enregistrez le scénario suivant sur l'application forum :
 <ul>
 <li>Ouvrez la page d'accueil,</li>
 <li>Connectez-vous avec un mot de passe ou un login erroné,</li>
