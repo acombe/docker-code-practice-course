@@ -1,0 +1,38 @@
+version: v1beta1
+containers:
+  - name: groupe1
+	image: acombe/docker-code-practice-course
+	ports:
+	  - name: ssh
+		hostPort: 1122
+		containerPort: 22
+	  - name: web
+		hostPort: 1180
+		containerPort: 80
+	  - name: jenkins
+		hostPort: 1181
+		containerPort: 8080
+	  - name: sonar
+		hostPort: 1182
+		containerPort: 9000
+	env:
+	  - key: GPORT
+		value: 11
+  - name: groupe2
+	image: acombe/docker-code-practice-course
+	ports:
+	  - name: ssh
+		hostPort: 1222
+		containerPort: 22
+	  - name: web
+		hostPort: 1280
+		containerPort: 80
+	  - name: jenkins
+		hostPort: 1281
+		containerPort: 8080
+	  - name: sonar
+		hostPort: 1282
+		containerPort: 9000
+	env:
+	  - key: GPORT
+		value: 12
